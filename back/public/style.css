@@ -1,0 +1,104 @@
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-size: 2rem;
+  scroll-behavior: smooth;
+}
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  padding: 0 10px;
+}
+.msjesEnviados {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  border: 1px solid green;
+  overflow-y: scroll;
+}
+
+.msjeIndividual {
+  background-color: rgb(74, 123, 187);
+  color: white;
+  padding: 10px;
+  width: 50%;
+}
+.msjeIndividual .metaInfo {
+  font-size: 1.2rem;
+  color: rgb(206, 192, 192);
+  font-style: italic;
+}
+.msjeIndividual.dcha {
+  align-self: flex-end;
+}
+.msjeIndividual.MENSAJEADMIN{
+  color: black;
+  background-color: rgb(167, 161, 161);
+}
+#chatForm {
+  padding-bottom: 40px;
+  width: 100%;
+  border: red 1px solid;
+  display: flex;
+}
+#chatForm input {
+  /* width: 100%; */
+  font-size: 2rem;
+}
+#chatForm input[type="text"] {
+  flex: 1;
+}
+#chatForm input[type="submit"],
+.introForm input[type="submit"] {
+  padding: 10px;
+  cursor: pointer;
+  font-size: 2rem;
+  background-color: rgb(74, 123, 187);
+  color: white;
+}
+input[type="text"],
+#chatRoomSelector {
+  font-size: 1.5rem;
+  padding: 10px;
+  outline: none;
+  border: none;
+}
+input[type="text"]:focus::placeholder {
+  color: rgb(155, 160, 160);
+}
+/*-------------------------INTRO FORM---------------------------*/
+.introForm {
+  background-color: rgb(74, 123, 187);
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 15vh;
+  gap: 10px;
+  padding: 30px 10px 30px;
+  border-radius: 20px;
+  width: 700px;
+  margin: auto;
+}
+.introForm .formControl {
+  display: flex;
+  flex-direction: column;
+}
+.introForm input[type="submit"] {
+  padding: 10px;
+  background-color: rgb(197, 201, 206);
+  color: rgb(26, 22, 22);
+}
+.introForm input[type="submit"]:hover {
+  background-color: rgb(197, 201, 206);
+  color: rgb(70, 65, 65);
+}
+/*----------------------------------------------------------*/
+#chatRoomSelector {
+}

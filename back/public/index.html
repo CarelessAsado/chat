@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>Rodri Chat</h1>
+      <div class="msjesEnviados"></div>
+      <form action="/" id="chatForm">
+        <input
+          type="text"
+          placeholder="Chateá con tus amigos..."
+          id="inputChat"
+        />
+        <input type="submit" value="Enviar" />
+      </form>
+    </div>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+      /*---------GET USERNAME ----------------*/
+      let params = new URL(document.location).searchParams;
+      const userName = params.get("userName");
+      const chatRoom = params.get("chatRoom");
+      if (!userName) {
+        window.location.replace("/chat");
+      }
+      /*---------INITIALIZE SOCKET.IO---------------------------*/
+      const msjesAdmin = "msgAdmin";
+      const socket = io();
+      const msjesDOM = document.querySelector(".msjesEnviados");
+      //JOIN ROOM
+      socket.emit("joinRoom", { userName, chatRoom });
+      socket.on(msjesAdmin, (message) => {
+        console.log(message, ": recibo del server/backend/ o user");
+        renderReply(message, true);
+      });
+      socket.on("chatMsg", (message) => {
+        renderReply(message, false);
+      });
+      const chatForm = document.getElementById("chatForm");
+      chatForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const newInput = e.target.elements.inputChat.value;
+        const text = `<div class="msjeIndividual dcha"><p class="metaInfo">${userName}<p>${newInput}</p></div>`;
+        msjesDOM.innerHTML += text;
+        console.log(msjesDOM);
+        socket.emit("chatMsg", newInput);
+
+        //vacío input
+        e.target.elements.inputChat.value = "";
+        e.target.elements.inputChat.focus();
+        //scrolleo automatico CORREGIR
+        msjesDOM.scrollTop = 2000;
+      });
+
+      function renderReply({ username, text, time }, admin) {
+        const msje = document.createElement("div");
+        msje.classList.add("msjeIndividual");
+        if (admin) {
+          msje.classList.add("MENSAJEADMIN");
+        }
+        msje.innerHTML = `<p class="metaInfo">${username} <span>${time}</span></p><p>${text}</p>`;
+        msjesDOM.appendChild(msje);
+      }
+    </script>
+  </body>
+</html>

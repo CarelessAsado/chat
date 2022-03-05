@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <title>Intro</title>
+  </head>
+  <body>
+    <div class="container">
+      <form class="introForm" action="/" method="">
+        <div class="formControl">
+          <label for="userName">Nombre de usuario</label>
+          <input
+            type="text"
+            name="userName"
+            id="userName"
+            required
+            placeholder="Nombre de usuario"
+          />
+        </div>
+        <div class="formControl">
+          <label for="chatRoom">Seleccioná la sala de chat</label>
+          <select name="chatRoom" id="chatRoomSelector">
+            <option value="Rodri">Rodri</option>
+            <option value="Erotica">XXX</option>
+          </select>
+        </div>
+        <input type="submit" value="Comenzar chat" />
+      </form>
+    </div>
+  </body>
+</html>
