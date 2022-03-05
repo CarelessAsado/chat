@@ -9,6 +9,8 @@ const {
   findUser,
   saveNewUser,
   removeFromChat,
+  findAllUsersOfARoom,
+  userDb,
 } = require("./utils/chatDataBase");
 const port = process.env.PORT || 3000;
 app.use(express.static("public"));
@@ -23,9 +25,11 @@ app.post("/chat", (req, res) => {
   res.redirect("/");
 });
 
+/*---------------------------------*/
+const admin = "Admin";
+const msjesAdmin = "msgAdmin";
+/*-------------------------------------------------------------------*/
 io.on("connection", (socket) => {
-  const admin = "Admin";
-  const msjesAdmin = "msgAdmin";
   socket.on("joinRoom", function ({ userName: username, chatRoom }) {
     socket.username = username;
     console.log(username, 000, "has connected");
@@ -38,7 +42,7 @@ io.on("connection", (socket) => {
       msjesAdmin,
       formatMyMessage(admin, `Bienvenido ${socket.username}!`)
     );
-
+    io.to(chatRoom).emit("allUserInChat", findAllUsersOfARoom(chatRoom));
     //to everybody but the user
     socket.broadcast
       .to(chatRoom)

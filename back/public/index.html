@@ -10,18 +10,24 @@
   <body>
     <div class="container">
       <h1>Rodri Chat</h1>
-      <div class="msjesEnviados"></div>
-      <form action="/" id="chatForm">
-        <input
-          type="text"
-          placeholder="Chateá con tus amigos..."
-          id="inputChat"
-        />
-        <input type="submit" value="Enviar" />
-      </form>
+      <aside id="usersOnlineContainer"></aside>
+      <main>
+        <div class="msjesEnviados"></div>
+        <form action="/" id="chatForm">
+          <input
+            type="text"
+            placeholder="Chateá con tus amigos..."
+            id="inputChat"
+          />
+          <input type="submit" value="Enviar" />
+        </form>
+      </main>
     </div>
     <script src="/socket.io/socket.io.js"></script>
     <script>
+      let usersOnlineContainer = document.getElementById(
+        "usersOnlineContainer"
+      );
       /*---------GET USERNAME ----------------*/
       let params = new URL(document.location).searchParams;
       const userName = params.get("userName");
@@ -39,6 +45,17 @@
         console.log(message, ": recibo del server/backend/ o user");
         renderReply(message, true);
       });
+      socket.on("allUserInChat", (data) => {
+        if (data?.length > 0) {
+          console.log(socket.id, data);
+          const allUsers = data
+            .filter((i) => i.id !== socket.id)
+            .map((i) => `<div>${i.username}</div>`)
+            .join(" ");
+          usersOnlineContainer.innerHTML = allUsers;
+        }
+      });
+      /*-------input de los Users-------------*/
       socket.on("chatMsg", (message) => {
         renderReply(message, false);
       });
