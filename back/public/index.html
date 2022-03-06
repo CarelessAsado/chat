@@ -31,11 +31,11 @@
         <div class="msjesEnviados"></div>
 
         <form action="/" id="chatForm">
-          <input
-            type="text"
+          <textarea
+            rows="3"
             placeholder="Chateá con tus amigos..."
             id="inputChat"
-          />
+          ></textarea>
           <input type="submit" value="Enviar" />
         </form>
       </main>
@@ -57,6 +57,7 @@
       const socket = io();
       const msjesDOM = document.querySelector(".msjesEnviados");
       const chatForm = document.getElementById("chatForm");
+      const textArea = document.getElementById("inputChat");
       //-------------JOIN ROOM
       socket.emit("joinRoom", { userName, chatRoom });
       socket.on(msjesAdmin, (message) => {
@@ -72,16 +73,14 @@
         renderMessage(ownMessage, false, true)
       );
       //-----------Emit my own INPUT---------------------
+      //Textarea does not submit on ENTER by default
+      textArea.addEventListener("keypress", (e) => {
+        if (e.which === 13) {
+          submitInput();
+        }
+      });
       chatForm.addEventListener("submit", (e) => {
-        e.preventDefault();
-        const newInput = e.target.elements.inputChat.value;
-        socket.emit("chatMsg", newInput);
-        //vacío input
-        e.target.elements.inputChat.value = "";
-        e.target.elements.inputChat.focus();
-        //scrolleo automatico CORREGIR
-        console.log(msjesDOM.scrollHeight);
-        msjesDOM.scrollTop = msjesDOM.scrollHeight;
+        submitInput(e);
       });
 
       function renderUsersOnline(data) {
@@ -113,6 +112,18 @@
           msje.classList.add("dcha");
         }
         msjesDOM.appendChild(msje);
+      }
+      function submitInput(e) {
+        if (e) {
+          e.preventDefault();
+        }
+        const newInput = textArea.value;
+        socket.emit("chatMsg", newInput);
+        //vacío input
+        textArea.value = "";
+        textArea.focus();
+        //scrolleo automatico CORREGIR
+        msjesDOM.scrollTop = msjesDOM.scrollHeight;
       }
     </script>
   </body>

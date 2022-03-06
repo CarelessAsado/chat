@@ -42,6 +42,10 @@ main .topMain {
   justify-content: space-between;
   text-align: center;
 }
+.topMain h1 {
+  font-size: 3rem;
+  padding-left: 10px;
+}
 main .topMain a {
   padding: 20px;
   background-color: var(--blue);
@@ -82,32 +86,41 @@ main .topMain a:hover {
 #chatForm {
   padding-bottom: 40px;
   width: 100%;
-  border: red 1px solid;
   display: flex;
 }
-#chatForm input {
+#chatForm input,
+#chatForm textarea,
+.introForm input[type="text"] {
   /* width: 100%; */
   font-size: 2rem;
 }
-#chatForm input[type="text"] {
+#chatForm textarea {
   flex: 1;
 }
+
 #chatForm input[type="submit"],
 .introForm input[type="submit"] {
   padding: 10px;
   cursor: pointer;
   font-size: 2rem;
-  background-color: rgb(74, 123, 187);
+  background-color: var(--blue);
   color: white;
+  border: 1px solid rgb(50, 128, 231);
+  transition: 0.3s;
 }
-input[type="text"],
+#chatForm input[type="submit"]:hover,
+.introForm input[type="submit"]:hover {
+  background-color: var(--blueHover);
+}
+textarea,
+.introForm input[type="text"],
 #chatRoomSelector {
   font-size: 1.5rem;
   padding: 10px;
   outline: none;
   border: none;
 }
-input[type="text"]:focus::placeholder {
+textarea:focus::placeholder {
   color: rgb(155, 160, 160);
 }
 /*-------------------------INTRO FORM---------------------------*/
