@@ -6,13 +6,22 @@ body {
   scroll-behavior: smooth;
 }
 .container {
-  max-width: 1000px;
+  max-width: 1400px;
   margin: 0 auto;
   height: 100vh;
   display: flex;
   justify-content: center;
-  flex-direction: column;
+  /*   flex-direction: column; */
   padding: 0 10px;
+  border: black 3px solid;
+}
+aside {
+  flex: 2;
+}
+main {
+  flex: 5;
+  display: flex;
+  flex-direction: column;
 }
 .msjesEnviados {
   flex: 1;
@@ -37,7 +46,7 @@ body {
 .msjeIndividual.dcha {
   align-self: flex-end;
 }
-.msjeIndividual.MENSAJEADMIN{
+.msjeIndividual.MENSAJEADMIN {
   color: black;
   background-color: rgb(167, 161, 161);
 }

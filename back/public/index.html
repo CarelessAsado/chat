@@ -9,10 +9,14 @@
   </head>
   <body>
     <div class="container">
-      <h1>Rodri Chat</h1>
-      <aside id="usersOnlineContainer"></aside>
+      <aside>
+        <h2>User online</h2>
+        <div id="usersOnlineContainer"></div>
+      </aside>
       <main>
+        <h1>Rodri Chat</h1>
         <div class="msjesEnviados"></div>
+
         <form action="/" id="chatForm">
           <input
             type="text"
@@ -28,7 +32,7 @@
       let usersOnlineContainer = document.getElementById(
         "usersOnlineContainer"
       );
-      /*---------GET USERNAME ----------------*/
+      /*---------GET USERNAME & CHATROOM ----------------*/
       let params = new URL(document.location).searchParams;
       const userName = params.get("userName");
       const chatRoom = params.get("chatRoom");
@@ -39,10 +43,10 @@
       const msjesAdmin = "msgAdmin";
       const socket = io();
       const msjesDOM = document.querySelector(".msjesEnviados");
-      //JOIN ROOM
+      const chatForm = document.getElementById("chatForm");
+      //-------------JOIN ROOM
       socket.emit("joinRoom", { userName, chatRoom });
       socket.on(msjesAdmin, (message) => {
-        console.log(message, ": recibo del server/backend/ o user");
         renderMessage(message, true, false);
       });
       socket.on("allUsersInChat", (data) => {
@@ -50,9 +54,13 @@
           renderUsersOnline(data);
         }
       });
-      /*-------input de los Users-------------*/
+      /*------------------INPUT USERS -------------*/
       socket.on("chatMsg", (message) => renderMessage(message, false, false));
-      const chatForm = document.getElementById("chatForm");
+      /*-----------------INPUT OWN-------------------------------*/
+      socket.on("ownMsg", (ownMessage) =>
+        renderMessage(ownMessage, false, true)
+      );
+      //-----------Emit my own INPUT---------------------
       chatForm.addEventListener("submit", (e) => {
         e.preventDefault();
         const newInput = e.target.elements.inputChat.value;
@@ -61,11 +69,10 @@
         e.target.elements.inputChat.value = "";
         e.target.elements.inputChat.focus();
         //scrolleo automatico CORREGIR
-        msjesDOM.scrollTop = 2000;
+        console.log(msjesDOM.scrollHeight);
+        msjesDOM.scrollTop = msjesDOM.scrollHeight;
       });
-      socket.on("ownMsg", (ownMessage) =>
-        renderMessage(ownMessage, false, true)
-      );
+
       function renderUsersOnline(data) {
         const allUsers = data
           .filter((i) => i.id !== socket.id)
@@ -74,8 +81,8 @@
         usersOnlineContainer.innerHTML = allUsers;
       }
       function renderMessage({ username, text, time }, admin, own) {
-        console.log(own, "ver si own esta", text);
         const msje = document.createElement("div");
+        msje.innerHTML = `<p class="metaInfo">${username} <span>${time}</span></p><p>${text}</p>`;
         msje.classList.add("msjeIndividual");
         if (admin) {
           msje.classList.add("MENSAJEADMIN");
@@ -83,7 +90,7 @@
         if (own) {
           msje.classList.add("dcha");
         }
-        msje.innerHTML = `<p class="metaInfo">${username} <span>${time}</span></p><p>${text}</p>`;
+
         msjesDOM.appendChild(msje);
       }
     </script>
