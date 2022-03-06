@@ -37,12 +37,13 @@ io.on("connection", (socket) => {
     saveNewUser({ username, id: socket.id, chatRoom });
     socket.join(chatRoom);
     /*---------------------------------MSJES ADMIN DE RECIBIDA AL USER Y A LOS DEMAS----------------*/
-    //socket.emit al individual user
+    //socket.emit al individual user (no se puede chainear con .to("chatRoom"))
     socket.emit(
       msjesAdmin,
       formatMyMessage(admin, `Bienvenido ${socket.username}!`)
     );
-    io.to(chatRoom).emit("allUserInChat", findAllUsersOfARoom(chatRoom));
+    //io.emit TO EVERYBODY
+    io.to(chatRoom).emit("allUsersInChat", findAllUsersOfARoom(chatRoom));
     //to everybody but the user
     socket.broadcast
       .to(chatRoom)
@@ -51,23 +52,26 @@ io.on("connection", (socket) => {
         formatMyMessage(admin, `${socket.username} se conectó!`)
       );
   });
-  //io.emit TO EVERYBODY
 
   socket.on("disconnect", () => {
     const userRemoved = removeFromChat(socket);
     if (userRemoved) {
+      io.to(userRemoved.chatRoom).emit(
+        "allUsersInChat",
+        findAllUsersOfARoom(userRemoved.chatRoom)
+      );
       return socket.broadcast
         .to(userRemoved.chatRoom)
         .emit(
           msjesAdmin,
-          formatMyMessage(admin, `${userRemoved.username}se fue del chat.`)
+          formatMyMessage(admin, `${userRemoved.username} se fue del chat.`)
         );
     } else {
       socket.broadcast.emit(
         msjesAdmin,
         formatMyMessage(
           admin,
-          `Socket id ${socket.id} se fue del chat, pero no estaba en la base de datos, ver dsp si`
+          `Socket id ${socket.id} se fue del chat, pero no estaba en la base de datos, una vez q ponga Db esto debería borrarlo.`
         )
       );
     }
@@ -82,6 +86,8 @@ io.on("connection", (socket) => {
       socket.broadcast
         .to(user.chatRoom)
         .emit("chatMsg", formatMyMessage(user.username, msg));
+      //emito el msje al user individual, ver si puedo refactorizar
+      socket.emit("ownMsg", formatMyMessage(user.username, msg));
     }
   });
 });

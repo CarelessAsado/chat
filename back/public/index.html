@@ -43,43 +43,45 @@
       socket.emit("joinRoom", { userName, chatRoom });
       socket.on(msjesAdmin, (message) => {
         console.log(message, ": recibo del server/backend/ o user");
-        renderReply(message, true);
+        renderMessage(message, true, false);
       });
-      socket.on("allUserInChat", (data) => {
+      socket.on("allUsersInChat", (data) => {
         if (data?.length > 0) {
-          console.log(socket.id, data);
-          const allUsers = data
-            .filter((i) => i.id !== socket.id)
-            .map((i) => `<div>${i.username}</div>`)
-            .join(" ");
-          usersOnlineContainer.innerHTML = allUsers;
+          renderUsersOnline(data);
         }
       });
       /*-------input de los Users-------------*/
-      socket.on("chatMsg", (message) => {
-        renderReply(message, false);
-      });
+      socket.on("chatMsg", (message) => renderMessage(message, false, false));
       const chatForm = document.getElementById("chatForm");
       chatForm.addEventListener("submit", (e) => {
         e.preventDefault();
         const newInput = e.target.elements.inputChat.value;
-        const text = `<div class="msjeIndividual dcha"><p class="metaInfo">${userName}<p>${newInput}</p></div>`;
-        msjesDOM.innerHTML += text;
-        console.log(msjesDOM);
         socket.emit("chatMsg", newInput);
-
         //vacío input
         e.target.elements.inputChat.value = "";
         e.target.elements.inputChat.focus();
         //scrolleo automatico CORREGIR
         msjesDOM.scrollTop = 2000;
       });
-
-      function renderReply({ username, text, time }, admin) {
+      socket.on("ownMsg", (ownMessage) =>
+        renderMessage(ownMessage, false, true)
+      );
+      function renderUsersOnline(data) {
+        const allUsers = data
+          .filter((i) => i.id !== socket.id)
+          .map((i) => `<div>${i.username}</div>`)
+          .join(" ");
+        usersOnlineContainer.innerHTML = allUsers;
+      }
+      function renderMessage({ username, text, time }, admin, own) {
+        console.log(own, "ver si own esta", text);
         const msje = document.createElement("div");
         msje.classList.add("msjeIndividual");
         if (admin) {
           msje.classList.add("MENSAJEADMIN");
+        }
+        if (own) {
+          msje.classList.add("dcha");
         }
         msje.innerHTML = `<p class="metaInfo">${username} <span>${time}</span></p><p>${text}</p>`;
         msjesDOM.appendChild(msje);
