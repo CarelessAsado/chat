@@ -10,6 +10,7 @@ const {
   saveNewUser,
   removeFromChat,
   findAllUsersOfARoom,
+  chatRoomStats,
   userDb,
 } = require("./utils/chatDataBase");
 const port = process.env.PORT || 3000;
@@ -42,6 +43,7 @@ io.on("connection", (socket) => {
       msjesAdmin,
       formatMyMessage(admin, `Bienvenido ${socket.username}!`)
     );
+    io.emit("chatRoomStats", chatRoomStats());
     //io.emit TO EVERYBODY
     io.to(chatRoom).emit("allUsersInChat", findAllUsersOfARoom(chatRoom));
     //to everybody but the user
@@ -88,6 +90,8 @@ io.on("connection", (socket) => {
         .emit("chatMsg", formatMyMessage(user.username, msg));
       //emito el msje al user individual, ver si puedo refactorizar
       socket.emit("ownMsg", formatMyMessage(user.username, msg));
+      // emito roomStats con users q se fueron de otras salas
+      io.emit("chatRoomStats", chatRoomStats());
     }
   });
 });

@@ -1,5 +1,18 @@
 const userDb = [];
+const chatRooms = ["Rodri", "Erotica"];
 
+function chatRoomStats() {
+  /*   return userDb.reduce((final, u) => {
+    chatRooms.forEach(chatRoom=>{
+      if(chatRoom===u.chatRoom){
+        if(final.some(c=>c))
+      }
+
+    })
+    return final;
+  }, []); */
+  return chatRooms;
+}
 function saveNewUser(user) {
   userDb.push(user);
 }
@@ -28,4 +41,5 @@ module.exports = {
   removeFromChat,
   findAllUsersOfARoom,
   userDb,
+  chatRoomStats,
 };

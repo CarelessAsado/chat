@@ -16,7 +16,7 @@ a {
   text-decoration: none;
   color: inherit;
 }
-/*---------------------------------------------------------------------*/
+/*----------------------------PRELOADING-----------------------------------------*/
 .preloader {
   transition: 0.5s;
   position: fixed;
@@ -115,6 +115,7 @@ main .topMain a:hover {
   padding: 10px;
   width: 50%;
   font-size: 2.5rem;
+  word-break: break-all;
 }
 .msjeIndividual .metaInfo {
   letter-spacing: 1px;
@@ -207,13 +208,12 @@ aside {
   display: flex;
   flex-direction: column;
   gap: 10px;
-
-  border: 1px solid red;
   flex: 1;
 }
-#chatRoomsContainer {
+#chatRoomsSection {
   flex: 1;
 }
+/*-------------------------------------------PONER ACA EL EDIT DEL SCROLL BAR ------------------------------------------------*/
 #usersOnlineContainer,
 #chatRoomsContainer {
   overflow-y: scroll;
@@ -238,4 +238,23 @@ aside {
   position: absolute;
   top: 0;
   border-radius: 50%;
+}
+/*---------------------------------------------*/
+section#chatRoomsSection {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+#chatRoomsContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+#chatRoomsContainer .roomChat:hover {
+  background-color: rgb(197, 191, 191);
+  transition: 0.3s;
+  cursor: pointer;
+}
+#chatRoomsContainer .roomChat a {
+  display: block;
 }
