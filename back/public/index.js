@@ -106,9 +106,9 @@ function renderChatRoomStats(data) {
       url +
       ">" +
       key +
-      "<i class='fas fa-users'>" +
+      "<i class='fas fa-users'><span>" +
       data[key] +
-      "</i></a> </li>";
+      "</span></i></a> </li>";
 
     /*     console.log(key, data[key]); */
   }
