@@ -62,6 +62,8 @@ io.on("connection", (socket) => {
         "allUsersInChat",
         findAllUsersOfARoom(userRemoved.chatRoom)
       );
+      // emito roomStats con users q se fueron de otras salas
+      io.emit("chatRoomStats", chatRoomStats());
       return socket.broadcast
         .to(userRemoved.chatRoom)
         .emit(
@@ -90,8 +92,6 @@ io.on("connection", (socket) => {
         .emit("chatMsg", formatMyMessage(user.username, msg));
       //emito el msje al user individual, ver si puedo refactorizar
       socket.emit("ownMsg", formatMyMessage(user.username, msg));
-      // emito roomStats con users q se fueron de otras salas
-      io.emit("chatRoomStats", chatRoomStats());
     }
   });
 });

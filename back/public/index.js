@@ -96,12 +96,29 @@ function submitInput(e) {
   msjesDOM.scrollTop = msjesDOM.scrollHeight;
 }
 function renderChatRoomStats(data) {
-  const roomsHtml = data
+  console.log(data, "ver si es un objeto con length");
+  let roomLinks = "";
+  for (const key in data) {
+    const url = "/?userName=" + userName + "&chatRoom=" + key;
+
+    roomLinks +=
+      '<li class="roomChat"><a href=' +
+      url +
+      ">" +
+      key +
+      "<i class='fas fa-users'>" +
+      data[key] +
+      "</i></a> </li>";
+
+    /*     console.log(key, data[key]); */
+  }
+  return (chatRoomsContainer.innerHTML = roomLinks);
+  /*   const roomsHtml = data
     .map((room) => {
       const url = "/?userName=" + userName + "&chatRoom=" + room;
       return '<li class="roomChat"><a href=' + url + ">" + room + "</a> </li>";
     })
     .join(" ");
 
-  chatRoomsContainer.innerHTML = roomsHtml;
+   */
 }

@@ -198,12 +198,11 @@ textarea:focus::placeholder {
   color: rgb(70, 65, 65);
 }
 /*----------------------------------------------------------*/
-#chatRoomSelector {
-}
+/* #chatRoomSelector {
+} */
 /*--------------------------------------------USERS ONLINE--------------*/
-aside {
-  border: 1px solid red;
-}
+/* aside {
+} */
 #usersOnlineContainer {
   display: flex;
   flex-direction: column;
@@ -217,6 +216,7 @@ aside {
 #usersOnlineContainer,
 #chatRoomsContainer {
   overflow-y: scroll;
+  flex: 1;
 }
 #usersOnlineContainer .userOnline {
   display: flex;
