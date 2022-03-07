@@ -1,5 +1,5 @@
 const userDb = [];
-const chatRooms = ["Rodri", "Erotica"];
+const chatRooms = ["Rodri", "Erotica", "fdsf", "Erosdfdstica", "Erotica"];
 
 function chatRoomStats() {
   const stats = chatRooms.reduce((final, chatRoom) => {
