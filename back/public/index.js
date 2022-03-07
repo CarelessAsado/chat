@@ -2,6 +2,7 @@
 let params = new URL(document.location).searchParams;
 const userName = params.get("userName");
 const chatRoom = params.get("chatRoom");
+console.log(userName, chatRoom, "VER SI SE MANDA BIEN");
 const preloader = document.querySelector(".preloader");
 let usersOnlineContainer = document.getElementById("usersOnlineContainer");
 const msjesDOM = document.querySelector(".msjesEnviados");
@@ -13,41 +14,43 @@ const chatRoomsContainer = document.getElementById("chatRoomsContainer");
 const msjesAdmin = "msgAdmin";
 const socket = io();
 
-/*------------IF NO USER REDIRECT TO RECEPTION ROOM------------------*/
+/*------------IF NO USER, REDIRECT TO RECEPTION ROOM------------------*/
 window.addEventListener("load", () => {
   if (!userName || !chatRoom) {
     window.location.replace("/chat");
   } else {
     //sacar preloader
     preloader.classList.add("animate");
+    //-------------JOIN ROOM
+    socket.emit("joinRoom", { userName, chatRoom });
+    socket.on(msjesAdmin, (message) => {
+      renderMessage(message, true, false);
+    });
+    socket.on("allUsersInChat", (data) => {
+      console.log(
+        data,
+        "ver si alguno no se borra, x ahi si salgo rapido y entro en otro chat hay delay"
+      );
+      return renderUsersOnline(data);
+    });
+    /*------------------INPUT USERS -------------*/
+    socket.on("chatMsg", (message) => renderMessage(message, false, false));
+    /*-----------------INPUT OWN-------------------------------*/
+    socket.on("ownMsg", (ownMessage) => renderMessage(ownMessage, false, true));
+    //-----------Emit my own INPUT---------------------
+    //Textarea does not submit on ENTER by default
+    textArea.addEventListener("keypress", (e) => {
+      if (e.which === 13) {
+        submitInput();
+      }
+    });
+    chatForm.addEventListener("submit", (e) => {
+      submitInput(e);
+    });
+    /*-----------------------CHATROOM SECTION------------------------------*/
+    socket.on("chatRoomStats", (data) => renderChatRoomStats(data));
   }
 });
-
-//-------------JOIN ROOM
-socket.emit("joinRoom", { userName, chatRoom });
-socket.on(msjesAdmin, (message) => {
-  renderMessage(message, true, false);
-});
-socket.on("allUsersInChat", (data) => {
-  return renderUsersOnline(data);
-});
-/*------------------INPUT USERS -------------*/
-socket.on("chatMsg", (message) => renderMessage(message, false, false));
-/*-----------------INPUT OWN-------------------------------*/
-socket.on("ownMsg", (ownMessage) => renderMessage(ownMessage, false, true));
-//-----------Emit my own INPUT---------------------
-//Textarea does not submit on ENTER by default
-textArea.addEventListener("keypress", (e) => {
-  console.log(e);
-  if (e.which === 13) {
-    submitInput();
-  }
-});
-chatForm.addEventListener("submit", (e) => {
-  submitInput(e);
-});
-/*-----------------------CHATROOM SECTION------------------------------*/
-socket.on("chatRoomStats", (data) => renderChatRoomStats(data));
 
 /*---------------------------------FUNCTIONS---------------------------------*/
 /*---------------------------------FUNCTIONS---------------------------------*/
@@ -109,16 +112,6 @@ function renderChatRoomStats(data) {
       "<i class='fas fa-users'><span>" +
       data[key] +
       "</span></i></a> </li>";
-
-    /*     console.log(key, data[key]); */
   }
   return (chatRoomsContainer.innerHTML = roomLinks);
-  /*   const roomsHtml = data
-    .map((room) => {
-      const url = "/?userName=" + userName + "&chatRoom=" + room;
-      return '<li class="roomChat"><a href=' + url + ">" + room + "</a> </li>";
-    })
-    .join(" ");
-
-   */
 }

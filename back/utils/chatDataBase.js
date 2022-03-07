@@ -2,7 +2,9 @@ const userDb = [];
 const chatRooms = ["Rodri", "Erotica"];
 
 function chatRoomStats() {
-  return chatRooms.reduce((final, chatRoom) => {
+  console.log(userDb, "CHATROOMSTATS INICIO");
+
+  const stats = chatRooms.reduce((final, chatRoom) => {
     final[chatRoom] = 0;
     userDb.forEach((u) => {
       if (u.chatRoom === chatRoom) {
@@ -11,6 +13,8 @@ function chatRoomStats() {
     });
     return final;
   }, {});
+  console.log(stats, "CHATROOMSTATS FIN");
+  return stats;
 }
 function saveNewUser(user) {
   userDb.push(user);
@@ -22,9 +26,12 @@ function findUser({ id }) {
 }
 function removeFromChat(socket) {
   const removedUser = userDb.find((i) => i.id === socket.id);
+  console.log(userDb, "REMOVEFROMCHAT INICIO");
   const usersUpdated = userDb.filter((user) => user.id !== socket.id);
   userDb.splice(0);
+  console.log(userDb, "REMOVEFROMCHAT INTERMEDIO");
   userDb.push(...usersUpdated);
+  console.log(userDb, "REMOVEFROMCHAT FIN");
   return removedUser;
 }
 function findAllUsersOfARoom(chatRoom) {
