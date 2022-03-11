@@ -26,6 +26,7 @@ a {
   justify-content: center;
   /* flex-direction: column; */
   padding: 0 10px;
+  border: 1px solid green;
 }
 aside {
   flex: 2;
@@ -110,7 +111,7 @@ main .topMain a:hover {
   flex: 1;
 }
 
-#chatForm input[type="submit"],
+#chatForm button[type="submit"],
 .introForm input[type="submit"] {
   padding: 10px;
   cursor: pointer;
@@ -120,7 +121,11 @@ main .topMain a:hover {
   border: 1px solid rgb(50, 128, 231);
   transition: 0.3s;
 }
-#chatForm input[type="submit"]:hover,
+
+#chatForm button[type="submit"] {
+  border-radius: 10px;
+}
+#chatForm button[type="submit"]:hover,
 .introForm input[type="submit"]:hover {
   background-color: var(--blueHover);
 }
@@ -347,6 +352,9 @@ aside section#chatRoomsSection {
   form {
     padding: 0 10px;
   }
+  #chatForm {
+    padding-bottom: 0;
+  }
   /*------------------------------------------*/
   aside section {
     flex: 1;
@@ -390,20 +398,56 @@ aside section#chatRoomsSection {
   }
 }
 @media only screen and (max-width: 490px) {
+  body {
+    font-size: 1.2rem;
+  }
+  .roomChat i.fa-users span {
+    font-size: 1rem;
+    height: 20px;
+    width: 20px;
+    top: -12px;
+  }
+  #chatRoomsContainer .roomChat a {
+    padding: 15px;
+  }
+  .msjeIndividual {
+    padding: 3px 5px;
+    width: 95%;
+    font-size: 1.5rem;
+  }
+  .msjesEnviados {
+    gap: 5px;
+  }
+  .msjeIndividual .metaInfo {
+    font-size: 1.2rem;
+  }
+  .topMain h1 {
+    font-size: 1.5rem;
+    padding-left: 5px;
+  }
+  main .topMain a {
+    padding: 10px;
+  }
   aside {
-    max-height: 100px;
+    height: 50px;
   }
 
   /*--equal and dynamic font*/
   aside h2,
   aside h4 {
-    font-size: 2.1rem;
+    font-size: 1.5rem;
+  }
+  #chatForm input,
+  #chatForm textarea,
+  .introForm input[type="text"] {
+    font-size: 1.5rem;
+    padding: 0;
+  }
+  #chatForm button[type="submit"] {
+    font-size: 1.5rem;
   }
   /*---evitar q main se superponga con aside*/
-  main .topMainin {
-    margin-top: 100px;
-  }
-  .msjeIndividual {
-    width: 95%;
+  main .topMain {
+    margin-top: 50px;
   }
 }
