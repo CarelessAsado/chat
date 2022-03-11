@@ -4,51 +4,32 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
     <link rel="stylesheet" href="style.css" />
-    <script
-      src="https://kit.fontawesome.com/ec87a17681.js"
-      crossorigin="anonymous"
-    ></script>
+    <title>Welcome</title>
+    <link rel="shortcut icon" type="image/x-icon" href="img/chat.ico" />
   </head>
   <body>
-    <div class="preloader"><div class="lds-dual-ring"></div></div>
     <div class="container">
-      <aside>
-        <section>
-          <h2 class="relativeTitles">User online</h2>
-          <div id="usersOnlineContainer"></div>
-        </section>
-        <section id="chatRoomsSection">
-          <h4 class="relativeTitles">Salas de chat</h4>
-          <ul id="chatRoomsContainer">
-            <li class="roomChat">
-              <a href="/?userName=qsdqsd&chatRoom=Rodri">Rodri</a>
-            </li>
-            <li class="roomChat">Erotica</li>
-          </ul>
-        </section>
-      </aside>
-      <main>
-        <div class="topMain">
-          <h1>Rodri Chat</h1>
-          <a href="/chat">Salir de la sala</a>
+      <form class="introForm" action="/chat" method="">
+        <div class="formControl">
+          <label for="userName">Nombre de usuario</label>
+          <input
+            type="text"
+            name="userName"
+            id="userName"
+            required
+            placeholder="Nombre de usuario"
+          />
         </div>
-
-        <div class="msjesEnviados"></div>
-
-        <form action="/" id="chatForm">
-          <textarea
-            autofocus
-            rows="3"
-            placeholder="Chateá con tus amigos..."
-            id="inputChat"
-          ></textarea>
-          <input type="submit" value="Enviar" />
-        </form>
-      </main>
+        <div class="formControl">
+          <label for="chatRoom">Seleccioná la sala de chat</label>
+          <select name="chatRoom" id="chatRoomSelector">
+            <option value="Rodri">Rodri</option>
+            <option value="Erotica">XXX</option>
+          </select>
+        </div>
+        <input type="submit" value="Comenzar chat" />
+      </form>
     </div>
-    <script src="/socket.io/socket.io.js"></script>
-    <script src="index.js"></script>
   </body>
 </html>

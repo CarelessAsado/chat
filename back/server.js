@@ -18,12 +18,9 @@ app.use(express.static("public"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 /*--------------------------------------------------*/
+//index route funciona x default con express.static
 app.get("/chat", (req, res) => {
   res.sendFile(__dirname + "/public/chat.html");
-});
-app.post("/chat", (req, res) => {
-  console.log(req.body, "username");
-  res.redirect("/");
 });
 
 /*---------------------------------*/
