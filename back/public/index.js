@@ -83,9 +83,13 @@ function renderMessage({ username, text, time }, admin, own) {
   }
   if (own) {
     msje.classList.add("dcha");
+    msjesDOM.appendChild(msje);
+    return (msjesDOM.scrollTop = msjesDOM.scrollHeight);
   }
   msjesDOM.appendChild(msje);
+  //scrolleo automatico CORREGIR
 }
+
 function submitInput(e) {
   if (e) {
     e.preventDefault();
@@ -95,20 +99,16 @@ function submitInput(e) {
   //vacío input
   textArea.value = "";
   textArea.focus();
-  //scrolleo automatico CORREGIR
-  msjesDOM.scrollTop = msjesDOM.scrollHeight;
 }
 function renderChatRoomStats(data) {
   console.log(data, "ver si es un objeto con length");
   let roomLinks = "";
   for (const key in data) {
     const url = "/?userName=" + userName + "&chatRoom=" + key;
+    const currentUserRoom = chatRoom === key && "currentRoom";
 
     roomLinks +=
-      '<li class="roomChat"><a href=' +
-      url +
-      ">" +
-      key +
+      `<li class=roomChat id=${currentUserRoom}><a href=${url}>${key}` +
       "<i class='fas fa-users'><span>" +
       data[key] +
       "</span></i></a> </li>";

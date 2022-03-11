@@ -282,6 +282,9 @@ section#chatRoomsSection {
   background-color: crimson;
   color: white;
 }
+.roomChat#currentRoom {
+  background-color: rgb(211, 240, 197);
+}
 /*------------------------------------------------------------*/
 @media only screen and (max-width: 800px) {
   .container {
@@ -340,7 +343,7 @@ section#chatRoomsSection {
   }
 
   main {
-    margin-top: 150px;
+    margin-top: 80px;
     flex: 6;
     display: flex;
     flex-direction: column;
