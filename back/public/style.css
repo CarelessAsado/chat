@@ -209,19 +209,37 @@ textarea:focus::placeholder {
   gap: 10px;
   flex: 1;
 }
-aside section {
+
+aside section#usersOnlineSection,
+aside section#chatRoomsSection {
   flex: 1;
   display: flex;
   flex-direction: column;
-}
-#chatRoomsSection {
-  flex: 1;
+  gap: 20px;
+  overflow-y: hidden;
 }
 /*-------------------------------------------PONER ACA EL EDIT DEL SCROLL BAR ------------------------------------------------*/
 #usersOnlineContainer,
 #chatRoomsContainer {
   overflow-y: scroll;
   flex: 1;
+}
+/* width */
+#usersOnlineContainer::-webkit-scrollbar,
+#chatRoomsContainer::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+#usersOnlineContainer::-webkit-scrollbar-track,
+#chatRoomsContainer::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+#usersOnlineContainer::-webkit-scrollbar-thumb,
+#chatRoomsContainer::-webkit-scrollbar-thumb {
+  background: #888;
 }
 #usersOnlineContainer .userOnline {
   display: flex;
@@ -245,17 +263,14 @@ aside section {
   border-radius: 50%;
 }
 /*---------------------------------------------*/
-section#chatRoomsSection {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
+
 #chatRoomsContainer {
   display: flex;
   flex-direction: column;
 }
 #chatRoomsContainer .roomChat:hover {
   background-color: rgb(197, 191, 191);
+  color: black;
   transition: 0.3s;
   cursor: pointer;
 }
@@ -284,6 +299,7 @@ section#chatRoomsSection {
 }
 .roomChat#currentRoom {
   background-color: rgb(211, 240, 197);
+  color: black;
 }
 /*------------------------------------------------------------*/
 @media only screen and (max-width: 800px) {
@@ -315,31 +331,33 @@ section#chatRoomsSection {
     position: relative;
     transition: 0.3s;
   }
+  aside section#usersOnlineSection,
+  aside section#chatRoomsSection {
+    overflow-y: visible;
+  }
   #usersOnlineContainer,
   #chatRoomsContainer {
-    display: none;
-  }
-  aside section .relativeTitles {
-    height: 100%;
-    display: flex;
-    align-items: center;
-  }
-  aside section:hover #chatRoomsContainer {
-    display: block;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    right: 0;
-    background-color: var(--blue);
-  }
-  aside section:hover #usersOnlineContainer {
-    display: block;
     position: absolute;
     top: 100%;
     left: 0;
     right: 0;
     background-color: var(--blue);
     width: 100%;
+    transform: scaleY(0);
+    transform-origin: top;
+    transition: 0.3s;
+    max-height: 40vh;
+    display: flex;
+  }
+  aside section .relativeTitles {
+    height: 100%;
+    display: flex;
+    align-items: center;
+  }
+  /*--------Show users or rooms------------------------*/
+  aside section:hover #usersOnlineContainer,
+  aside section:hover #chatRoomsContainer {
+    transform: scaleY(1);
   }
 
   main {
