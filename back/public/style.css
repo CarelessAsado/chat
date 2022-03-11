@@ -16,51 +16,7 @@ a {
   text-decoration: none;
   color: inherit;
 }
-/*----------------------------PRELOADING-----------------------------------------*/
-.preloader {
-  transition: 0.5s;
-  position: fixed;
-  height: 100%;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  background-color: rgb(25, 27, 34);
-}
-.preloader.animate {
-  animation: vanish 0.5s;
-  visibility: hidden;
-}
-@keyframes vanish {
-  100% {
-    opacity: 0;
-  }
-}
-/*----------------------------loader ring---------------------*/
-.lds-dual-ring {
-  width: 80px;
-  height: 80px;
-}
-.lds-dual-ring:before {
-  content: " ";
-  display: block;
-  width: 64px;
-  height: 64px;
-  margin: 8px;
-  border-radius: 50%;
-  border: 6px solid #fff;
-  border-color: #fff transparent #fff transparent;
-  animation: lds-dual-ring 1.2s linear infinite;
-}
-@keyframes lds-dual-ring {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-}
+
 /*--------------------------------------------------------------------------------*/
 .container {
   max-width: 1400px;
@@ -301,17 +257,54 @@ aside section#chatRoomsSection {
   background-color: rgb(211, 240, 197);
   color: black;
 }
+
+/*----------------------------PRELOADING-----------------------------------------*/
+.preloader {
+  transition: 0.5s;
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: rgb(25, 27, 34);
+}
+.preloader.animate {
+  animation: vanish 0.5s;
+  visibility: hidden;
+}
+@keyframes vanish {
+  100% {
+    opacity: 0;
+  }
+}
+/*----------------------------loader ring---------------------*/
+.lds-dual-ring {
+  width: 80px;
+  height: 80px;
+}
+.lds-dual-ring:before {
+  content: " ";
+  display: block;
+  width: 64px;
+  height: 64px;
+  margin: 8px;
+  border-radius: 50%;
+  border: 6px solid #fff;
+  border-color: #fff transparent #fff transparent;
+  animation: lds-dual-ring 1.2s linear infinite;
+}
+@keyframes lds-dual-ring {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
 /*------------------------------------------------------------*/
 @media only screen and (max-width: 800px) {
-  .container {
-    max-width: 1400px;
-    margin: 0 auto;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    padding: 0 10px;
-  }
   aside {
     background-color: var(--blue);
     color: var(--white);
@@ -325,6 +318,10 @@ aside section#chatRoomsSection {
     gap: 10px;
     flex: 0;
     height: 70px;
+  }
+  /*---evitar q main se superponga con aside*/
+  main {
+    margin-top: 100px;
   }
   aside section {
     flex: 1;
@@ -358,13 +355,5 @@ aside section#chatRoomsSection {
   aside section:hover #usersOnlineContainer,
   aside section:hover #chatRoomsContainer {
     transform: scaleY(1);
-  }
-
-  main {
-    margin-top: 80px;
-    flex: 6;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
   }
 }
