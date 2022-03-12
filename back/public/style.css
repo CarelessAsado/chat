@@ -26,7 +26,6 @@ a {
   justify-content: center;
   /* flex-direction: column; */
   padding: 0 10px;
-  border: 1px solid green;
 }
 aside {
   flex: 2;
@@ -196,19 +195,22 @@ aside section#chatRoomsSection {
 }
 /* width */
 #usersOnlineContainer::-webkit-scrollbar,
-#chatRoomsContainer::-webkit-scrollbar {
+#chatRoomsContainer::-webkit-scrollbar,
+textarea::-webkit-scrollbar {
   width: 10px;
 }
 
 /* Track */
 #usersOnlineContainer::-webkit-scrollbar-track,
-#chatRoomsContainer::-webkit-scrollbar-track {
+#chatRoomsContainer::-webkit-scrollbar-track,
+textarea::-webkit-scrollbar-track {
   background: #f1f1f1;
 }
 
 /* Handle */
 #usersOnlineContainer::-webkit-scrollbar-thumb,
-#chatRoomsContainer::-webkit-scrollbar-thumb {
+#chatRoomsContainer::-webkit-scrollbar-thumb,
+textarea::-webkit-scrollbar-thumb {
   background: #888;
 }
 #usersOnlineContainer .userOnline {
